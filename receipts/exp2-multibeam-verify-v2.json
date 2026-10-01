@@ -1,0 +1,359 @@
+{
+ "registered_bands": {
+  "R1": "tree |d|<=0.03 of 0.7879; linear |d|<=0.05 of 0.7148",
+  "R2": "sklearn raw beams same bands",
+  "R3": "63-d digests UNREPRODUCED expected (no canon variant matched)",
+  "R4": "book fixed-partition result, fail-closed, LOW_POWER when n<50"
+ },
+ "device": {
+  "cores": 2,
+  "numpy": "2.1.3",
+  "sklearn": "1.5.2"
+ },
+ "dataset": {
+  "distinct_boards": 2423,
+  "chance_all": 0.5865,
+  "single_optimal": 1246,
+  "chance_single": 0.4188
+ },
+ "R1_committed_protocol": {
+  "tree_all": {
+   "mean": 0.7879,
+   "std": 0.0224,
+   "folds": [
+    0.7876,
+    0.7814,
+    0.8144,
+    0.8058,
+    0.75
+   ]
+  },
+  "linear_all": {
+   "mean": 0.7148,
+   "std": 0.017,
+   "folds": [
+    0.7381,
+    0.6948,
+    0.7299,
+    0.7128,
+    0.6983
+   ]
+  },
+  "tree_single": {
+   "mean": 0.6793,
+   "std": 0.0289,
+   "folds": [
+    0.6789,
+    0.6824,
+    0.7078,
+    0.7016,
+    0.626
+   ]
+  },
+  "linear_single": {
+   "mean": 0.5708,
+   "std": 0.0175,
+   "folds": [
+    0.5894,
+    0.5725,
+    0.5679,
+    0.5847,
+    0.5394
+   ]
+  },
+  "pass": true
+ },
+ "R2_sklearn": {
+  "tree_raw": {
+   "all": {
+    "mean": 0.7268,
+    "std": 0.0354,
+    "folds": [
+     0.732,
+     0.7052,
+     0.7711,
+     0.7541,
+     0.6715
+    ]
+   },
+   "single": {
+    "mean": 0.6179,
+    "std": 0.0502,
+    "folds": [
+     0.6016,
+     0.5922,
+     0.6872,
+     0.6613,
+     0.5472
+    ]
+   }
+  },
+  "tree_onehot": {
+   "all": {
+    "mean": 0.6673,
+    "std": 0.0208,
+    "folds": [
+     0.6598,
+     0.6784,
+     0.699,
+     0.6364,
+     0.6632
+    ]
+   },
+   "single": {
+    "mean": 0.5425,
+    "std": 0.0291,
+    "folds": [
+     0.5203,
+     0.5647,
+     0.5802,
+     0.5,
+     0.5472
+    ]
+   }
+  },
+  "logreg_raw": {
+   "all": {
+    "mean": 0.2637,
+    "std": 0.0204,
+    "folds": [
+     0.2742,
+     0.2351,
+     0.268,
+     0.2479,
+     0.2934
+    ]
+   },
+   "single": {
+    "mean": 0.1748,
+    "std": 0.0232,
+    "folds": [
+     0.1463,
+     0.1647,
+     0.177,
+     0.1694,
+     0.2165
+    ]
+   }
+  },
+  "logreg_onehot": {
+   "all": {
+    "mean": 0.65,
+    "std": 0.0117,
+    "folds": [
+     0.6639,
+     0.6598,
+     0.6536,
+     0.6343,
+     0.6384
+    ]
+   },
+   "single": {
+    "mean": 0.5126,
+    "std": 0.0246,
+    "folds": [
+     0.5244,
+     0.5529,
+     0.5021,
+     0.4798,
+     0.5039
+    ]
+   }
+  },
+  "pass_band": false
+ },
+ "R4_partition_fix": {
+  "counts": {
+   "full_old": {
+    "S": 1193,
+    "C": 1230
+   },
+   "full_new": {
+    "S": 2081,
+    "C": 342
+   },
+   "single_old": {
+    "S": 528,
+    "C": 718
+   },
+   "single_new": {
+    "S": 1224,
+    "C": 22
+   }
+  },
+  "parts": {
+   "tree_old": {
+    "S": {
+     "acc": {
+      "mean": 0.7362,
+      "std": 0.0244,
+      "folds": [
+       0.725,
+       0.7229,
+       0.781,
+       0.7411,
+       0.7109
+      ]
+     },
+     "chance": 0.5122,
+     "filled_mean": 0.4592,
+     "n": 1193,
+     "LOW_POWER": false
+    },
+    "C": {
+     "acc": {
+      "mean": 0.8374,
+      "std": 0.0234,
+      "folds": [
+       0.849,
+       0.8346,
+       0.8477,
+       0.8615,
+       0.7939
+      ]
+     },
+     "chance": 0.6585,
+     "filled_mean": 0.5237,
+     "n": 1230,
+     "LOW_POWER": false
+    }
+   },
+   "tree_new": {
+    "S": {
+     "acc": {
+      "mean": 0.759,
+      "std": 0.0218,
+      "folds": [
+       0.7602,
+       0.7585,
+       0.7831,
+       0.7737,
+       0.7193
+      ]
+     },
+     "chance": 0.5512,
+     "filled_mean": 0.463,
+     "n": 2081,
+     "LOW_POWER": false
+    },
+    "C": {
+     "acc": {
+      "mean": 0.9649,
+      "std": 0.029,
+      "folds": [
+       0.9559,
+       0.9155,
+       1.0,
+       0.9863,
+       0.9667
+      ]
+     },
+     "chance": 0.8012,
+     "filled_mean": 0.8233,
+     "n": 342,
+     "LOW_POWER": false
+    }
+   },
+   "linear_old": {
+    "S": {
+     "acc": {
+      "mean": 0.6688,
+      "std": 0.0327,
+      "folds": [
+       0.6792,
+       0.6277,
+       0.6694,
+       0.7232,
+       0.6445
+      ]
+     },
+     "chance": 0.5122,
+     "filled_mean": 0.3211,
+     "n": 1193,
+     "LOW_POWER": false
+    },
+    "C": {
+     "acc": {
+      "mean": 0.7609,
+      "std": 0.0328,
+      "folds": [
+       0.7959,
+       0.7559,
+       0.7901,
+       0.7038,
+       0.7588
+      ]
+     },
+     "chance": 0.6585,
+     "filled_mean": 0.2998,
+     "n": 1230,
+     "LOW_POWER": false
+    }
+   },
+   "linear_new": {
+    "S": {
+     "acc": {
+      "mean": 0.6848,
+      "std": 0.0157,
+      "folds": [
+       0.7074,
+       0.6667,
+       0.6892,
+       0.6934,
+       0.6675
+      ]
+     },
+     "chance": 0.5512,
+     "filled_mean": 0.2978,
+     "n": 2081,
+     "LOW_POWER": false
+    },
+    "C": {
+     "acc": {
+      "mean": 0.8991,
+      "std": 0.0526,
+      "folds": [
+       0.9265,
+       0.8592,
+       0.9714,
+       0.8219,
+       0.9167
+      ]
+     },
+     "chance": 0.8012,
+     "filled_mean": 0.4927,
+     "n": 342,
+     "LOW_POWER": false
+    }
+   }
+  },
+  "tree_gap_fixed": 0.3603,
+  "linear_penalty_fixed": -0.1949,
+  "composed_low_power": false
+ },
+ "R3_digests": {
+  "canon": "sorted lines; board chars x/o/.; '|' ; sorted optimal moves; trailing newline; file=receipts/exp2-distinct-boards.txt",
+  "distinct_sha256": "ae19d8ad4a2c070535e682cbbb69d3e73e276f3fdcde0ca294e3d827e82c13f9",
+  "distinct_fnv1a64": "0x65a75b94d9804cfd",
+  "study_63d": {
+   "distinct_sha256": "a4fc7dfb88847253ccff478730ccd57139987211ca6d18ed47efadacee1ceb50",
+   "distinct_fnv1a64": "0x110ce15d74ea1781",
+   "path_sha256": "a57efa281802e8c1b67c63baabdddb5dfe7eb4ccfd50c38d3d2088b3be381498",
+   "path_fnv1a64": "0x816e361f86987399"
+  },
+  "status": "UNREPRODUCED \u2014 no canon variant tried (sort\u00d7moves\u00d7trailing\u00d7sep, 8+ variants) reproduces 63-d digests; both parties' digests recorded; our dump pinned for future beams"
+ },
+ "overall": {
+  "R1_reproduction": true,
+  "R2_independent_beam_raw": false,
+  "R3_digests": "UNREPRODUCED (booked both)",
+  "R4_partition_fix": {
+   "tree_gap": 0.3603,
+   "linear_penalty": -0.1949,
+   "composed_low_power": false,
+   "reading": "fixed partition preserves the additivity story"
+  },
+  "verdict": "HONEST-PARTIAL",
+  "runtime_s": 21.5
+ }
+}
