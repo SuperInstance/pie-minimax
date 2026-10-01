@@ -26,7 +26,7 @@ should get local positions and fail the rest.
 
 ## The ground truth has a wrinkle worth knowing about
 
-180,361 reachable our-turn states, and **26,505 of them (14.7%) have more than one
+5,478 reachable states (2,423 with us to move), and **26,505 of them (14.7%) have more than one
 equally-correct move.** Optimal sets run from 1 to 9 moves wide.
 
 Training on *a* move rather than the *set* therefore relabels 14.7% of the data as error
@@ -80,3 +80,21 @@ python3 minmax.py          # the exact policy; importable, cached, 1.2s for all 
 python3 sweep.py           # linear vs hidden
 python3 tune.py            # the learning-rate sweep that shows the confound
 ```
+
+
+---
+
+## CORRECTION — the state count was impossible
+
+This document previously said **180,361 reachable our-turn states**. That number cannot exist: a 3x3 board has 3^9 = 19,683 distinct states, so even labelling every one with whose turn gives at most 39,366. **180,361 is larger than the entire state space by a factor of 4.6.**
+
+The real numbers, from the repo's own `enumerate_reachable()`:
+
+- **5,478** reachable board states in total
+- **2,423** of them with US to move — this is the training set size
+- **1,177 (48.6%)** have more than one optimal move, not 14.7%
+- optimal-set sizes run 1 to 9; 456 positions have 3 optimal moves, 116 have 5
+
+The multi-optimal fraction matters more than the raw count: **a label set that picks one optimal move relabels 48.6% of positions as errors.** Any accuracy measured with single-move labels on this dataset is measuring agreement with an arbitrary tie-break, not correctness.
+
+The number was wrong in the same way as the fleet's `historybloat` signal — a figure that nobody checked against the size of the space it claims to count. **3^9 = 19,683 is a fact you can check in your head; the number should have been checked against it before it was written down.**
