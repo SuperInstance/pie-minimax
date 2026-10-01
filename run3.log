@@ -1,0 +1,75 @@
+  dataset: 2423 us-to-move positions
+    chance level (mean |optimal| / |empty|) = 0.5865
+    single-optimal subset: 1246 positions, chance 0.4188
+    multi-optimal subset : 1177 positions
+
+  5-FOLD CROSS-VALIDATION. Variance is across DATA FOLDS, not across seeds -- the
+  v2 runs had std == 0 across seeds because different inits converge to the same
+  solution, and std == 0 is INCONCLUSIVE, never a pass.
+
+    model                       top1 (all)          top1 (single-optimal only)
+    --------------------------------------------------------------------
+    random empty cell (FLOOR)    0.5753 +/- 0.0212     0.4206 +/- 0.0284
+    linear 9x9 (matched budget)  0.7148 +/- 0.0170     0.5708 +/- 0.0175
+    decision tree, depth 4       0.6830 +/- 0.0243     0.5659 +/- 0.0319
+    decision tree, depth 8       0.7590 +/- 0.0253     0.6503 +/- 0.0326
+    decision tree, depth 12      0.7879 +/- 0.0223     0.6785 +/- 0.0252
+    decision tree, depth 16      0.7879 +/- 0.0224     0.6793 +/- 0.0289
+    decision tree, depth 24      0.7879 +/- 0.0224     0.6793 +/- 0.0289
+    decision tree, depth 40      0.7879 +/- 0.0224     0.6793 +/- 0.0289
+
+  CEILING. An exact solver scores 1.0000 on both columns by construction.
+    best on the single-optimal subset: decision tree, depth 16 at 0.6793
+    linear 0.5708 = 0.840 of that
+    floor  0.4206;  best tree is 1.62x the floor,  linear is 1.36x
+
+  PRE-REGISTERED SIMPLE / COMPOSED SPLIT, on the single-optimal subset only
+  (where there is no tie-break to confuse the reading):
+    SIMPLE   (0-1 own threat)  n=  528  chance 0.2547   tree 0.6685   linear 0.5509
+                                     lift over chance:  tree  2.62x   linear  2.16x
+    COMPOSED (2+ own threats)  n=  718  chance 0.5395   tree 0.8008   linear 0.6435
+                                     lift over chance:  tree  1.48x   linear  1.19x
+
+  *** THE HEADROOM CORRECTION, AND WHY THE NAIVE READING IS WRONG ***
+
+  Raw accuracy says COMPOSED is the HARD subset for the model. Raw accuracy is
+  confounded, and the confound is visible in the chance line above:
+    SIMPLE   chance 0.2547  (mean ~3.9 empty cells -- early game)
+    COMPOSED chance 0.5395  (mean ~1.9 empty cells -- LATE game)
+
+  A position with two of your own lines one stone from completing is, structurally,
+  a LATE position. Late positions have fewer empty cells, so chance is already high,
+  so a fixed amount of model skill moves the number less. Comparing raw accuracy
+  across subsets with different chance levels compares the chance levels, not the
+  models.
+
+  The right normalisation is FRACTION OF HEADROOM: how much of the gap between
+  chance and 1.0 the model actually closes.
+
+    subset                       chance     tree   linear     tree fills  linear fills
+    SIMPLE   (0-1 own threat)    0.2547   0.6685   0.5509          55.5%         39.7%
+    COMPOSED (2+ own threats)    0.5395   0.8008   0.6435          56.7%         22.6%
+
+  THE RESULT, AS MEASURED:
+
+    decision tree: 55.5% of headroom on SIMPLE, 56.7% on COMPOSED. INDISTINGUISHABLE.
+                    The non-linear model shows NO composition penalty at all.
+    linear 9x9:    39.7% of headroom on SIMPLE, 22.6% on COMPOSED. A REAL DROP,
+                    roughly a 43% loss of closed headroom.
+
+  So the pre-registered prediction is HALF right, and the half that survives is the
+  more specific one. The COMPOSITION PENALTY IS REAL FOR THE LINEAR MODEL AND ABSENT
+  FOR THE TREE. That is a sharper claim than 'composition is hard': it says the
+  penalty is a property of ADDITIVITY, not of the task. A sum of local votes cannot
+  represent a count over separate lines; a model that can form intermediate
+  conjunctions can, and does. Minimax composition is not beyond these models -- it is
+  beyond THIS representation.
+
+  This also retro-explains the original 0.1807. That number was never 'a neural net
+  is bad at minimax'. It was 'a linear map is bad at minimax', which is true and much
+  less interesting, and the number was reported without the ceiling that would have
+  said so.
+
+  WHAT THIS DOES SUPPORT: a depth-matched COMPOSED-vs-SIMPLE contrast, which is now
+  the obvious next experiment, and the reason it is worth running is that the naive
+  version of it produces the OPPOSITE sign.
