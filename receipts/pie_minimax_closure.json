@@ -1,0 +1,94 @@
+{
+  "experiment": "pie-minimax-closure-mlp",
+  "pre_registered": "2026-10-01",
+  "predictions": {
+    "P1": "global top-1 in [0.25,0.40]",
+    "P2": "composed < 70% of global"
+  },
+  "device": "cuda:0 (RTX 4050, 6GB)",
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "results": {
+    "linear_top1": 0.1807,
+    "mlp_top1_global": 0.9996,
+    "mlp_top1_composed": 1.0,
+    "composed_share": 0.1321
+  },
+  "verdict": {
+    "P1": "FAIL-HIGH",
+    "P2": "FAIL"
+  },
+  "details": {
+    "linear_reproduction": {
+      "top1": 0.1807,
+      "floor": 0.1431,
+      "set_recall": 0.1748,
+      "protocol": "sweep.py, seed 0, exact match"
+    },
+    "state_space": {
+      "path_rows": 180361,
+      "distinct_our_turn_boards": 2423,
+      "composed_boards": 320,
+      "composed_path_weighted_rows": 11520
+    },
+    "mlp": {
+      "arch": "9-64-9 relu",
+      "params": 1225,
+      "lr": 0.01,
+      "loss": "set-valued -log sum_{m in Opt} softmax(z)_m",
+      "early_stop": "patience 200 on train loss, min_delta 1e-06",
+      "optimizer": "Adam full-batch"
+    },
+    "per_seed": [
+      {
+        "seed": 1,
+        "params": 1225,
+        "steps_run": 4000,
+        "final_train_loss": 0.0001,
+        "train_secs": 12.6707,
+        "top1_global": 0.9996,
+        "top1_composed": 1.0,
+        "composed_test_n": 519,
+        "composed_test_share": 0.0649
+      },
+      {
+        "seed": 2,
+        "params": 1225,
+        "steps_run": 4000,
+        "final_train_loss": 0.0001,
+        "train_secs": 11.4669,
+        "top1_global": 0.9996,
+        "top1_composed": 1.0,
+        "composed_test_n": 557,
+        "composed_test_share": 0.0696
+      },
+      {
+        "seed": 3,
+        "params": 1225,
+        "steps_run": 4000,
+        "final_train_loss": 0.0001,
+        "train_secs": 10.279,
+        "top1_global": 0.9996,
+        "top1_composed": 1.0,
+        "composed_test_n": 517,
+        "composed_test_share": 0.0646
+      }
+    ],
+    "std_global": 0.0,
+    "std_composed": 0.0,
+    "verdict_note": "global top-1 > 0.6: composition thesis weakens (report either way)",
+    "supplementary_5fold_heldout": {
+      "protocol": "5-fold CV over 2,423 distinct boards (run3.py-style folds, seeds 100-104), train only on fold-train boards",
+      "top1_mean": 0.9798,
+      "top1_std": 0.0044,
+      "composed_top1_mean": 0.9911,
+      "fold_top1": [0.9794, 0.9856, 0.9732, 0.9835, 0.9773],
+      "note": "CONFIRMS FAIL-HIGH is generalization, not interpolation. Exceeds run3.py tree 0.79 because that tree trained on single-move tie-break labels (README's own label problem); MLP uses set-valued loss. Not an evaluation leak: labels are the exact computation, top-1 <= 1.0 trivially."
+    },
+    "gpu_ramp_seconds": 1.137,
+    "wall_clock_seconds": 36.4
+  }
+}
